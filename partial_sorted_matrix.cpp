@@ -13,7 +13,7 @@ bool find(int *matrix, int rows, int cols, int number){
 	
 	while(current_row >=0 && current_col < cols){
 	    if( matrix[current_row * cols + current_col] == number ){
-		cout<<"The number "<<number<<" is founded ";
+		cout<<"The number "<<number<<" is found ";
 		cout<<"at row ("<<current_row+1<<"), column ("<<current_col+1<<")"<<endl;
 		return true;
 	    }else{
@@ -27,10 +27,10 @@ bool find(int *matrix, int rows, int cols, int number){
 	    }
 	}
     }else{
-	cout<<"invalid matrix (NULL pointer passed) "<<endl;
+	cout<<"invalid matrix (NULL pointer passed) or out of range. "<<endl;
 	return false;
     }
-
+    cout<<number<<" is not found in matrix"<<endl;
     return false;
 }
 
