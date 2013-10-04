@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
     void Print();
     void Append(int _data);
     void Delete(int _data);
+    void PrintReversely();
 };
 
 void List::Print(){
@@ -69,7 +71,6 @@ void List::Delete(int _data){
     // empty list
     if(head == NULL)
 	return;
-
    
     Node* ToBeDeleted = NULL;
     if(head->GetData() == _data){
@@ -96,6 +97,28 @@ void List::Delete(int _data){
     }
 }
 
+void List::PrintReversely(){
+    stack<Node*> nodes;
+    Node* ptr = head;
+    if(ptr==NULL){
+	cout<<" Empty List"<<endl;
+	return;
+    }
+
+    while(ptr!=NULL){
+	nodes.push(ptr);
+	ptr= ptr->GetNext();
+    }
+    cout<<"NULL ";
+    while(!nodes.empty()){
+	Node* tmp = nodes.top();
+	cout<<" <-- ";
+	cout<<tmp->GetData();
+	nodes.pop();
+    }
+    cout<<endl;
+}
+
 int main(){
     List mylist;
     mylist.Append(100);
@@ -107,7 +130,8 @@ int main(){
     mylist.Print();
     mylist.Append(400);
     mylist.Print();
-    
+    mylist.PrintReversely();
+
     mylist.Delete(300);
     mylist.Print();
     mylist.Delete(200);
