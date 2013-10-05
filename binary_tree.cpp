@@ -7,7 +7,7 @@ void BinaryTree::destroy(Node* leaf){
     if(leaf!=NULL){
 	destroy(leaf->left);
 	destroy(leaf->right);
-	delete leaf;
+	remove(leaf->value);
     }
 }
 
@@ -156,5 +156,10 @@ int main(){
     cout<<mytree<<endl;
     mytree.remove(5);
     cout<<mytree<<endl;
+    
+    cout<<"destroy the tree ... "<<endl;
+    mytree.destroy_tree();
+    cout<<mytree<<endl;
+    
     return 0;
 }
