@@ -8,6 +8,7 @@ class Node{
     Node* next;
 public:
     Node(){};
+    Node(int _data): data(_data), next(NULL){};
     void SetData(int aData) {data = aData;}
     void SetNext(Node* aNext){ next = aNext;}
     int GetData(){ return data;}
@@ -21,8 +22,10 @@ public:
     List() {head = NULL;}
     void Print();
     void Append(int _data);
+    void Append(Node* _n);
     void Delete(int _data);
     void PrintReversely();
+    void Delete(Node* _n);
 };
 
 void List::Print(){
@@ -66,6 +69,23 @@ void List::Append(int _data){
     }
 }
 
+void List::Append(Node* _n){
+    if(!_n )
+	return;
+    Node *tmp = head; // a copy of list head ptr
+    if(tmp != NULL){
+	while(tmp->GetNext() != NULL){
+	    tmp = tmp->GetNext();
+	}
+	
+	//append the new Node to end of the list
+	tmp->SetNext(_n);
+    }else{
+	// the list has no node yet
+	head = _n;
+    }
+    
+}
 
 void List::Delete(int _data){ 
     // empty list
@@ -97,6 +117,7 @@ void List::Delete(int _data){
     }
 }
 
+// Question 5
 void List::PrintReversely(){
     stack<Node*> nodes;
     Node* ptr = head;
@@ -117,6 +138,19 @@ void List::PrintReversely(){
 	nodes.pop();
     }
     cout<<endl;
+}
+
+void List::Delete(Node* _n){
+    if(!head || !_n)
+	return;
+    //if _n is not the end node
+    if(_n->GetNext() != NULL){
+	Node* pNext = _n->GetNext();
+	_n->SetData(pNext->GetData());
+	_n->SetNext(pNext->GetNext());
+	delete pNext; // free the memory pointed by pNext
+	pNext = NULL; // pointed dangling ptr to NULL
+    }
 }
 
 int main(){
@@ -141,5 +175,17 @@ int main(){
     mylist.Delete(400);
     mylist.Print();
     
+
+    List yrlist;
+    Node * n1 = new Node(1);
+    Node * n2 = new Node(2);
+    Node * n3 = new Node(3);
+    yrlist.Append(n1);
+    yrlist.Append(n2);
+    yrlist.Append(n3);
+    yrlist.Print();
+
+    yrlist.Delete(n2);
+    yrlist.Print();
     return 0;
 }
