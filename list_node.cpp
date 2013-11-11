@@ -151,6 +151,23 @@ void List::Delete(Node* _n){
 	delete pNext; // free the memory pointed by pNext
 	pNext = NULL; // pointed dangling ptr to NULL
     }
+    // if the node to be deleted is the only head node
+    else if (head == _n){
+	cout<<"will delete "<<_n->GetData()<<endl;
+	delete _n;
+	_n = NULL;
+	head = NULL;
+	
+    }else{
+	// delete the tail node
+	Node* tmp = head;
+	while(tmp->GetNext() != _n){
+	    tmp = tmp->GetNext();
+	}
+	tmp->SetNext(NULL);
+	delete _n;
+	_n = NULL;
+    }
 }
 
 int main(){
@@ -185,7 +202,11 @@ int main(){
     yrlist.Append(n3);
     yrlist.Print();
 
-    yrlist.Delete(n2);
+    yrlist.Delete(n1);
     yrlist.Print();
+    //yrlist.Delete(n1);
+    // yrlist.Print();
+    //yrlist.Delete(n2);
+    //yrlist.Print();
     return 0;
 }
