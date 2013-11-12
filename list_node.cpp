@@ -153,7 +153,7 @@ void List::Delete(Node* _n){
     }
     // if the node to be deleted is the only head node
     else if (head == _n){
-	cout<<"will delete "<<_n->GetData()<<endl;
+	//cout<<"will delete "<<_n->GetData()<<endl;
 	delete _n;
 	_n = NULL;
 	head = NULL;
@@ -204,8 +204,8 @@ int main(){
 
     yrlist.Delete(n1);
     yrlist.Print();
-    //yrlist.Delete(n1);
-    // yrlist.Print();
+    yrlist.Delete(n1);
+    yrlist.Print();
     //yrlist.Delete(n2);
     //yrlist.Print();
     return 0;
