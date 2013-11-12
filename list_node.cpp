@@ -1,32 +1,6 @@
-#include <iostream>
-#include <stack>
+#include "list_node.h"
 
 using namespace std;
-
-class Node{
-    int data; 
-    Node* next;
-public:
-    Node(){};
-    Node(int _data): data(_data), next(NULL){};
-    void SetData(int aData) {data = aData;}
-    void SetNext(Node* aNext){ next = aNext;}
-    int GetData(){ return data;}
-    Node* GetNext() {return next;}
-};
-
-
-class List{
-    Node *head;
-public:
-    List() {head = NULL;}
-    void Print();
-    void Append(int _data);
-    void Append(Node* _n);
-    void Delete(int _data);
-    void PrintReversely();
-    void Delete(Node* _n);
-};
 
 void List::Print(){
     Node *tmp = head;
@@ -170,6 +144,36 @@ void List::Delete(Node* _n){
     }
 }
 
+Node* List::KthNodeToTail(int k){
+    if(head == NULL || k<=0 ){
+	cerr<<"Empty list!"<<endl;
+	return NULL;
+    }
+   	
+    // pointer 1 goes first for k-1 steps
+    Node* ptr_1 = head; 
+    for(int i =0 ; i<k-1; i++){
+	// since so far the list size is unknown
+	// need check the list tail each step
+	if(ptr_1 ->GetNext() != NULL)
+	    ptr_1 = ptr_1->GetNext();
+	else
+	    return NULL;
+	
+    } // now ptr_1 points to the kth node in the list
+    // create pointer 2 now, let it be the list head
+    Node* ptr_2 = head;
+    while(ptr_1->GetNext() != NULL){
+	// two pointers go forward together
+	// until ptr_1 reaches the tail node
+	// ptr_2 then points the kth node to the tail
+	ptr_1 = ptr_1 -> GetNext();
+	ptr_2 = ptr_2 -> GetNext();
+    }
+    return ptr_2;
+}
+
+
 int main(){
     List mylist;
     mylist.Append(100);
@@ -197,16 +201,27 @@ int main(){
     Node * n1 = new Node(1);
     Node * n2 = new Node(2);
     Node * n3 = new Node(3);
+    Node * n4 = new Node(4);
+    Node * n5 = new Node(5);
+    Node * n6 = new Node(6);
     yrlist.Append(n1);
     yrlist.Append(n2);
     yrlist.Append(n3);
+    yrlist.Append(n4);
+    yrlist.Append(n5);
+    yrlist.Append(n6);
     yrlist.Print();
-
+    
+    cout<<"the last node to the list is:\n";
+    cout<<yrlist.KthNodeToTail(1)->GetData()<<endl;
+    cout<<"the 3rd node to the tail is:\n";
+    cout<<yrlist.KthNodeToTail(3)->GetData()<<endl;
     yrlist.Delete(n1);
     yrlist.Print();
+    // for this method, since n1 is not really deleted but replaced
     yrlist.Delete(n1);
     yrlist.Print();
-    //yrlist.Delete(n2);
-    //yrlist.Print();
+   
+   
     return 0;
 }
