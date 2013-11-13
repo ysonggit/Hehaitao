@@ -182,8 +182,8 @@ List List::Reverse(){
     Node* tail = NULL;
     Node* pre = NULL;
     while(ptr != NULL){
-	// h -> i -> j
-	Node* nxt = ptr->GetNext(); //ptr:(i), nxt:(j)
+	// h <- i -> j
+	Node* nxt = ptr->GetNext(); //pre:(h), ptr:(i), nxt:(j)
 	if(nxt == NULL){
 	    // reaches to the tail
 	    tail = ptr;
@@ -199,7 +199,7 @@ List List::Reverse(){
 	// pre->GetData() = ptr->GetData()
 	// pre->GetNext() is pre
 	// pre: (i) | h <- i -> j
-	pre = ptr;
+	pre = ptr; // without step 1, pre (i) will still points to (j)
 	// 3. finally set current node to its *next 
 	// after this assignment, ptr->GetNext() actually is ptr->GetNext()->GetNext(), ptr->GetData() is ptr->GetNext()->GetData()
 	// ptr:(j) | h <- i <- j -> ...
