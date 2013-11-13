@@ -173,6 +173,42 @@ Node* List::KthNodeToTail(int k){
     return ptr_2;
 }
 
+List List::Reverse(){
+    Node* ptr = head;
+    List rev_list;
+    if(ptr == NULL){
+	return rev_list;
+    }
+    Node* tail = NULL;
+    Node* pre = NULL;
+    while(ptr != NULL){
+	// h -> i -> j
+	Node* nxt = ptr->GetNext(); //ptr:(i), nxt:(j)
+	if(nxt == NULL){
+	    // reaches to the tail
+	    tail = ptr;
+	}
+	// so far current node's pointer points to next
+	// do following three steps: (order matters)
+	// 1. Set current node's *next pointer point to the node ahead 
+	// ptr->GetNext() becomes pre, which is set in last iteration step 2
+	// ptr->GetData() is not changed yet
+	// h <- i -> j
+	ptr->SetNext(pre);
+	// 2. Save current node as pre, so it can be used in following iteration
+	// pre->GetData() = ptr->GetData()
+	// pre->GetNext() is pre
+	// pre: (i) | h <- i -> j
+	pre = ptr;
+	// 3. finally set current node to its *next 
+	// after this assignment, ptr->GetNext() actually is ptr->GetNext()->GetNext(), ptr->GetData() is ptr->GetNext()->GetData()
+	// ptr:(j) | h <- i <- j -> ...
+	ptr = nxt;
+	
+    }    
+    rev_list = List(tail);
+    return rev_list;
+}
 
 int main(){
     List mylist;
@@ -212,6 +248,8 @@ int main(){
     yrlist.Append(n6);
     yrlist.Print();
     
+   
+
     cout<<"the last node to the list is:\n";
     cout<<yrlist.KthNodeToTail(1)->GetData()<<endl;
     cout<<"the 3rd node to the tail is:\n";
@@ -222,6 +260,8 @@ int main(){
     yrlist.Delete(n1);
     yrlist.Print();
    
-   
+    List herlist = yrlist.Reverse();
+    cout<<"create a revese list "<<endl;
+    herlist.Print();
     return 0;
 }

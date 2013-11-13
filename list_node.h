@@ -19,6 +19,7 @@ class List{
     Node *head;
 public:
     List() {head = NULL;}
+    List(Node* h): head(h){}
     void Print();
     void Append(int _data);
     void Delete(int _data);
@@ -31,4 +32,9 @@ public:
     // Question 15
     Node* KthNodeToTail(int k);
     
+    Node* GetHead(){return head; }
+    
+    List Reverse();
 };
+
+
