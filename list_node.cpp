@@ -210,6 +210,37 @@ List List::Reverse(){
     return rev_list;
 }
 
+// Question 17
+/*
+  inputs : two starting nodes from two lists
+ */
+void merge(Node* n1, Node* n2, List& new_list){
+    if(n1 == NULL && n2 == NULL){
+	return;
+    }
+    if(n1  == NULL && n2 != NULL){
+	new_list.Append(n2);
+	return;
+    }
+    if(n1 != NULL && n2 == NULL){
+	new_list.Append(n1);
+	return;
+    }
+    
+    
+    if(n1->GetData() < n2->GetData()){
+	new_list.Append(n1->GetData());
+	merge(n1->GetNext(), n2, new_list);
+	
+    }
+    else{
+	new_list.Append(n2->GetData());
+	merge(n1, n2->GetNext(), new_list);
+    }
+    
+    
+}
+
 int main(){
     List mylist;
     mylist.Append(100);
@@ -263,5 +294,24 @@ int main(){
     List herlist = yrlist.Reverse();
     cout<<"create a revese list "<<endl;
     herlist.Print();
+
+    cout<<"Merge two sorted lists"<<endl;
+    List a, b;
+    a.Append(1);
+    a.Append(9);
+    a.Append(24);
+    a.Append(30);
+    cout<<"List 1: ";
+    a.Print();
+    b.Append(7);
+    b.Append(8);
+    b.Append(29);
+    b.Append(32);
+    cout<<"List 2: ";
+    b.Print();
+    List c;
+    merge(a.GetHead(), b.GetHead(), c);
+    cout<<"Merged list: ";
+    c.Print();
     return 0;
 }
